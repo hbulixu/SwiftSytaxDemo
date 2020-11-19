@@ -36,7 +36,6 @@ class  FuncRewriterVisitor: SyntaxRewriter {
         if(retBody.statements.first?.description == beforeNode.description){
             return DeclSyntax(node);
         }
-        
         retBody.statements = retBody.statements.prepending(beforeNode)
         retBody.statements = retBody.statements.appending(afterNode)
         
