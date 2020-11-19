@@ -39,7 +39,17 @@ func vistor(_ file: Path) throws -> Void {
 func injectFunc(_ file: Path) throws -> Void {
     
     let sourceFile = try SyntaxParser.parse(file.url)
-    let content = FuncRewriterVisitor().visit(sourceFile);
+    let beforeStr = """
+                    print("before")
+                    print("before1")
+                    """
+    let afterStr = """
+                    print("after")
+                    print("after1")
+                   """
+    
+    let config = FuncRewriterConfig(filePath: file.description, sourceFileSytax: sourceFile, beforeSource: beforeStr, afterSource: afterStr);
+    let content = FuncRewriterVisitor(config: config).visit(sourceFile);
     var fileContents: String = "";
     content.write(to: &fileContents)
     try fileContents.write(to: file.url, atomically: true, encoding: .utf8)
@@ -69,7 +79,7 @@ var files:[Path] = try recursiveFiles(withExtensions: ["swift","h","m","mm"], at
 for file in files{
     
   // try vistor(file);
-  // try injectFunc(file)
-    try collection(file)
+   try injectFunc(file)
+  //  try collection(file)
 }
 

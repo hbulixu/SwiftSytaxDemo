@@ -73,7 +73,6 @@ class CollectionVisitor: SyntaxVisitor {
         return .visitChildren
     }
     
-    
 }
 
 extension CollectionVisitor{
