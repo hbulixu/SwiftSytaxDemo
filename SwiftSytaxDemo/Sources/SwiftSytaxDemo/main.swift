@@ -53,7 +53,9 @@ func collection(_ file: Path) throws -> Void {
 
 func unUseImage(_ path: Path) throws -> Void {
     
-    var images = try getAllImageInfos(path);
+    let imagePath = Path("/Users/lixu12/Documents/work/app/huangye_ios/IOS/58BP/Source/");
+    var images = try getAllImageInfos(imagePath!);
+    
     let files:[Path] = try recursiveFiles(withExtensions: ["swift","h","m","mm"], at: path)
     
     for file in files{
@@ -76,7 +78,9 @@ func unUseImage(_ path: Path) throws -> Void {
     }
 }
 
-let path = Path("/Users/lixu12/Documents/work/app/huangye_ios/IOS/58BP");
+let path = Path("/Users/lixu12/Documents/work/app/huangye_ios/");
+
+
 
 try unUseImage(path!)
 

@@ -31,8 +31,13 @@ extension XMLFilter:XMLParserDelegate{
     
   public func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
         if  let text = attributeDict["image"]{
-            
-            images = images.filter { $0.imageNameWithOutX != text }
+            print(text);
+            images = images.filter {
+                if(text.contains($0.imageNameWithExt)||text.contains($0.imageNameWithOutX)){
+                    return false;
+                }
+                return true;
+            }
         }
     }
 }

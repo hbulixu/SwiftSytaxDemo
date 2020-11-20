@@ -25,7 +25,12 @@ import SwiftSyntax
             return .skipChildren
         }
 
-        images = images.filter {$0.imageNameWithOutX != text }
+        images = images.filter {
+            if(text.contains($0.imageNameWithExt)||text.contains($0.imageNameWithOutX)){
+                return false;
+            }
+            return true;
+        }
 
         return .skipChildren
     }
@@ -34,7 +39,12 @@ import SwiftSyntax
 
         switch token.tokenKind {
         case .stringLiteral(let text):
-            images = images.filter { !text.contains($0.imageNameWithOutX) }
+            images = images.filter {
+                if(text.contains($0.imageNameWithExt)||text.contains($0.imageNameWithOutX)){
+                    return false;
+                }
+                return true;
+            }
         default:
             break
         }

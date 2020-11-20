@@ -13,10 +13,12 @@ func getAllImageInfos(_ path:Path) throws ->  [ImageInfo] {
     for imagePath in images {
         
        var  image_x = imagePath.basename(dropExtension: true)
+        
        if image_x.hasSuffix("@2x") || image_x.hasSuffix("@3x"){
-        image_x = image_x.suffix(3).base
+            image_x = String(image_x.prefix(image_x.count-3))
        }
-        imageInfos.append(ImageInfo(path: imagePath, imageNameWithOutX: image_x))
+        
+        imageInfos.append(ImageInfo(path: imagePath, imageNameWithOutX: image_x,imageNameWithExt:( "\(image_x).\(imagePath.extension)" )))
     }
     return imageInfos;
 }
