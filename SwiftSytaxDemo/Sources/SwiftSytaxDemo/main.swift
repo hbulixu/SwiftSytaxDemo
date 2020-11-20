@@ -3,23 +3,6 @@ import SwiftSyntax
 print("Hello, world!")
 
 
-func recursiveFiles(withExtensions exts: [String], at path: Path) throws -> [Path] {
-    if path.isFile {
-        if exts.contains(path.extension) {
-            return [path]
-        }
-        return []
-    } else if path.isDirectory {
-        var files: [Path] = []
-        for entry in path.ls() {
-            let list = try recursiveFiles(withExtensions: exts, at: entry)
-            files.append(contentsOf: list)
-        }
-        return files
-    }
-    return []
-}
-
 //guard CommandLine.arguments.count > 1, let path = Path(CommandLine.arguments[1]) else {
 //    fatalError("You should provide a folder")
 //}
@@ -68,18 +51,46 @@ func collection(_ file: Path) throws -> Void {
     
 }
 
+func unUseImage(_ path: Path) throws -> Void {
+    
+    var images = try getAllImageInfos(path);
+    let files:[Path] = try recursiveFiles(withExtensions: ["swift","h","m","mm"], at: path)
+    
+    for file in files{
+        let sourceFile = try SyntaxParser.parse(file.url)
+        let visitor = ImageVisitor(images)
+        visitor.walk(sourceFile);
+        images = visitor.images;
+    }
+    
+    let xmlFiles:[Path] =  try recursiveFiles(withExtensions: ["xib","storyboard"], at: path)
+    
+    for xmlFile in xmlFiles {
+        let filter = XMLFilter(images);
+        filter.filter(xmlFile)
+        images = filter.images
+    }
+    
+    for image in images {
+        print("\(image.path.basename()) in \(image.path.parent.string)")
+    }
+}
+
+let path = Path("/Users/lixu12/Documents/work/app/huangye_ios/IOS/58BP");
+
+try unUseImage(path!)
 
 //let path = Path("/Users/lixu12/Desktop/SwiftSytaxDemo/SwiftSytaxDemo/Sources/SwiftSytaxDemo/FuncRewriterVisitor.swift")
 
 
-let path = Path("/Users/lixu12/Desktop/SwiftSytaxDemo/SwiftSytaxDemo/Sources/SwiftSytaxDemo/test/RewriteTarget.swift")
-
-var files:[Path] = try recursiveFiles(withExtensions: ["swift","h","m","mm"], at: path!)
-
-for file in files{
-    
-  // try vistor(file);
-   try injectFunc(file)
-  //  try collection(file)
-}
+//let path = Path("/Users/lixu12/Desktop/SwiftSytaxDemo/SwiftSytaxDemo/Sources/SwiftSytaxDemo/test/RewriteTarget.swift")
+//
+//var files:[Path] = try recursiveFiles(withExtensions: ["swift","h","m","mm"], at: path!)
+//
+//for file in files{
+//
+//   try vistor(file);
+//  // try injectFunc(file)
+//  //  try collection(file)
+//}
 

@@ -40,6 +40,7 @@ class CollectionVisitor: SyntaxVisitor {
     
     override func visit(_ node: FunctionDeclSyntax) -> SyntaxVisitorContinueKind {
         
+        print(node.description);
         let ps = node.signature.input.parameterList.compactMap {
             $0.firstName?.text
         }
@@ -72,6 +73,7 @@ class CollectionVisitor: SyntaxVisitor {
         }
         return .visitChildren
     }
+    
     
 }
 
