@@ -53,8 +53,8 @@ func collection(_ file: Path) throws -> Void {
 
 func unUseImage(_ path: Path) throws -> Void {
     
-    let imagePath = Path("/Users/lixu12/Documents/work/app/huangye_ios/IOS/58BP/Source/");
-    var images = try getAllImageInfos(imagePath!);
+    //let imagePath = Path("/Users/lixu12/Documents/work/app/huangye_ios/IOS/58BP/Source/");
+    var images = try getAllImageInfos(path);
     
     let files:[Path] = try recursiveFiles(withExtensions: ["swift","h","m","mm"], at: path)
     
@@ -73,9 +73,11 @@ func unUseImage(_ path: Path) throws -> Void {
         images = filter.images
     }
     
-    for image in images {
-        print("\(image.path.basename()) in \(image.path.parent.string)")
-    }
+//    for image in images {
+//        print("\(image.path.basename()) in \(image.path.parent.string)")
+//    }
+    
+    try writeToExcel(imageInfos: images);
 }
 
 let path = Path("/Users/lixu12/Documents/work/app/huangye_ios/");
