@@ -75,23 +75,23 @@ func unUseImage(_ path: Path) throws -> Void {
     try writeToExcel(imageInfos:images, path:path);
 }
 
-let path = Path("/Users/lixu12/Documents/work/app/huangye_ios/");
+//let path = Path("/Users/lixu12/Documents/work/app/huangye_ios/");
 
-try unUseImage(path!)
+//try unUseImage(path!)
 
-
+//curryTest()
 
 //let path = Path("/Users/lixu12/Desktop/SwiftSytaxDemo/SwiftSytaxDemo/Sources/SwiftSytaxDemo/FuncRewriterVisitor.swift")
 
 
-//let path = Path("/Users/lixu12/Desktop/SwiftSytaxDemo/SwiftSytaxDemo/Sources/SwiftSytaxDemo/test/RewriteTarget.swift")
+let path = Path("/Users/lixu12/Desktop/SwiftSytaxDemo/SwiftSytaxDemo/Sources/SwiftSytaxDemo/test/RewriteTarget.swift")
 //
-//var files:[Path] = try recursiveFiles(withExtensions: ["swift","h","m","mm"], at: path!)
+var files:[Path] = try recursiveFiles(withExtensions: ["swift","h","m","mm"], at: path!)
 //
-//for file in files{
+for file in files{
 //
 //   try vistor(file);
-//  // try injectFunc(file)
+try injectFunc(file)
 //  //  try collection(file)
-//}
+}
 
